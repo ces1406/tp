@@ -171,7 +171,7 @@ int main(int argc,char** argv){
 			return EXIT_FAILURE;
 		}
 		if(FD_ISSET(g_socketsProg[0],&g_fds_lecturaProg)){
-			printf("Nueva conexion de un programa\n");
+			//printf("Nueva conexion de un programa\n");
 			//un nuevo programa quiere conexion
 			g_socketsAbiertosProg++;
 			atenderNuevaConexion(socketEscuchaPLP,(void*)atenderPrograma,&socketMayor,g_socketsAbiertosProg,g_socketsProg);
@@ -638,6 +638,7 @@ void atenderCPU(int p_sockCPU){
 		varBuscada->valor=valorCompar;
 		free(nombCompar);nombCompar=NULL;
 	break;
+	listarNuevos();//todo-------------------------->sacar mas tarde
 	}
 }
 void levantarArchivoConf(char *path){
@@ -948,8 +949,8 @@ void encolarEnNuevos(t_pcb p_pcb, short int peso,short int soquet){
 	pthread_mutex_lock(&mutex_listaNuevos);
 	list_add_in_index(listaNuevos,i,nuevoProceso);
 	pthread_mutex_unlock(&mutex_listaNuevos);
-	sem_post(&sem_listaNuevos);//avisamos al hiloManejoListas
 	listarNuevos();
+	sem_post(&sem_listaNuevos);//avisamos al hiloManejoListas
 }
 short int calcularPeso(t_size cantEtiquetas,t_size cantFunciones,t_size cantLineas){
 	return 5*cantEtiquetas+3*cantFunciones+cantLineas;
