@@ -18,7 +18,7 @@ instalar-kernel-poll:
 desinstalar-kernel-poll:
 	cd kernel-poll && make desinstalar
 	
-instalar-kerne-select:
+instalar-kernel-select:
 	cd kernel-select && make instalar
 desinstalar-kernel-select:	
 	cd kernel-select && make instalar
