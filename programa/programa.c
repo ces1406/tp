@@ -51,7 +51,7 @@ int main (int argc,char *argv[]){
 	if((script=fopen(argv[1],"r"))==NULL){
 		printf("No se encontro el archivo");//----->nunca deberia llegar aca
 	}else{
-		printf("archivo encontrado\n");
+		//printf("archivo encontrado\n");
 		while((c=fgetc(script))!=EOF){
 			tamanio++;
 			data=realloc(data,tamanio);
@@ -80,20 +80,19 @@ int main (int argc,char *argv[]){
 	puertoKernel  =config_get_int_value(configPrograma,"Puerto-Kernel");
 	ip_prog       =config_get_string_value(configPrograma,"IP-Kernel");
     strcpy(ipKernel,ip_prog);
-    printf("se conectara a ip-kernel:%s puerto-kernel:%i...\n",ip_prog,puertoKernel);
+    //printf("se conectara a ip-kernel:%s puerto-kernel:%i...\n",ip_prog,puertoKernel);
  	config_destroy(configPrograma);
  	//log_debug(logger,"Se levanto el archivo de configuracion con puerto-kernel:%i ip-kernel:%s",puertoKernel,ipKernel);
  	//CONECTANDOSE AL KERNEL
 	socketKernel=crearSocket();
 	conectarseCon(ipKernel,puertoKernel,socketKernel);
 	//log_debug(logger,"Se conectara con kernel...");
-	printf("se hizo la conexion\n");
 
 	//HACIENDO HANDSHAKE CON KERNEL
 	mensaje.encabezado.codMsg=K_HANDSHAKE;
 	mensaje.encabezado.longitud=0;
 	enviarMsg(socketKernel,mensaje);
-	printf("handshake mandado\n");
+	//printf("handshake mandado\n");
 	free(mensaje.flujoDatos);mensaje.flujoDatos=NULL;
 	//log_debug(logger,"Se mando mensaje a kernel con codigo:K_HANDSHAKE...");
 
