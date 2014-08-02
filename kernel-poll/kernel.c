@@ -303,11 +303,9 @@ void atenderCPU(int p_sockCPU){
 		nombreSem[mensajeCPU.encabezado.longitud-sizeof(uint16_t)]='\0';
 		//printf("llego pedido de wait semaforo:%s\n",nombreSem);
 		for(i=0;i<list_size(listaSemaforos);i++){
-			printf("iteracion %i\n",i);
 			semaforo=list_get(listaSemaforos,i);
 			//printf("semaforo->nombre:%s nombreSema:%s\nstrcmp(semaforo->nombre,nombreSem)=%i\n",semaforo->nombre,nombreSem,strcmp(semaforo->nombre,nombreSem));
 			if(strcmp(semaforo->nombre,nombreSem)==0){
-				//printf("strincmp dio distinto de cero\n");
 				break;
 			}
 			else semaforo=NULL;
@@ -665,7 +663,7 @@ void levantarArchivoConf(char *path){
 	printf("******se levanto el archivo de configuracion********\n");
 }
 void atenderNuevaConexion(int sockEscucha,int conexiones,struct pollfd *ufdss,void (*funcionQueAtiende)(int)){
-	int socketNuevo,i;
+	int socketNuevo;//,i;
 	//t_log *g_logger;
 
 	socketNuevo=aceptarConexion(sockEscucha);
@@ -1232,6 +1230,7 @@ void *hiloTerminarProcesos(void *sinUso){
 		enviarMsg(proceso->soquet_prog,mensaje);
 
 		close(proceso->soquet_prog);
+		destruirNodoProceso(proceso);
 /*
 		//ELIMINANDO EL SOCKET DEL CONJUNTO QUE USA POLL
 		for(i=1;i<g_socketsAbiertos;i++){//buscar el n° de socket en g_ufdsPLP para sacarlo

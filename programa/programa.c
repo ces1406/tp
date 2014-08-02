@@ -112,7 +112,7 @@ int main (int argc,char *argv[]){
 		if(mensaje.encabezado.codMsg==P_IMPRIMIR_VAR){
 			//log_debug(logger,"Se recicibio un mensaje de kernel con el valor a imprimir de una variable");
 			printf("********************************************\n");
-			printf("-------------RESULTADO: %i\n",(int)*(mensaje.flujoDatos));
+			printf("-------------VALOR RETORNADO: %i\n",(int)*(mensaje.flujoDatos));
 			printf("********************************************\n");
 			free(mensaje.flujoDatos);mensaje.flujoDatos=NULL;
 		}

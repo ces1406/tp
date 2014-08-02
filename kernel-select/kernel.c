@@ -298,13 +298,11 @@ void atenderCPU(int p_sockCPU){
 		memcpy(nombreSem,mensajeCPU.flujoDatos+sizeof(uint16_t),mensajeCPU.encabezado.longitud-sizeof(uint16_t));
 		nombreSem[mensajeCPU.encabezado.longitud-sizeof(uint16_t)]='\0';
 		//semaforo=(t_semaforo*)dictionary_get(diccio_semaforos,nombreSem);
-		printf("llego pedido de wait semaforo:%s\n",nombreSem);
+		//printf("llego pedido de wait semaforo:%s\n",nombreSem);
 		for(i=0;i<list_size(listaSemaforos);i++){
-			printf("iteracion %i\n",i);
 			semaforo=list_get(listaSemaforos,i);
-			printf("semaforo->nombre:%s nombreSema:%s\nstrcmp(semaforo->nombre,nombreSem)=%i\n",semaforo->nombre,nombreSem,strcmp(semaforo->nombre,nombreSem));
+			//printf("semaforo->nombre:%s nombreSema:%s\nstrcmp(semaforo->nombre,nombreSem)=%i\n",semaforo->nombre,nombreSem,strcmp(semaforo->nombre,nombreSem));
 			if(strcmp(semaforo->nombre,nombreSem)==0){
-				printf("strincmp dio distinto de cero\n");
 				break;
 			}
 			else semaforo=NULL;
@@ -432,7 +430,7 @@ void atenderCPU(int p_sockCPU){
 	break;
 	case K_EXPULSADO_SEG_FAULT://un proceso en cpu salio por operacion invalida en memoria
 		log_debug(g_logger,"atenderCPU()==>mensaje de cpu: K_EXPULSADO_SEG_FAULT");
-		printf("atenderCPU()==>mensaje de cpu: K_EXPULSADO_SEG_FAULT\n");
+		//printf("atenderCPU()==>mensaje de cpu: K_EXPULSADO_SEG_FAULT\n");
 		actualizarPcb(&l_pcb,mensajeCPU);//--------->VER OTRA FORMA DE SACAR EL id
 		id=l_pcb.id_proceso;
 		liberarMsg(&mensajeCPU);
@@ -445,10 +443,8 @@ void atenderCPU(int p_sockCPU){
 		printf("\n***********ERROR: el programa id:%i produjo un acceso a memoria incorrecto =>expulsandolo...**********",id);
 
 		//pasar el proceso a la listaTerminados
-		printf("\npasando proceso a terminados");
 		pasarProcesoATerminados(procesoAux);
 		//liberar cpu
-		printf("\nliberando la cpu");
 		ponerCpuDisponible(p_sockCPU);
 	break;
 	case K_EXPULSADO_FIN_QUANTUM://un proceso en cpu salio por fin de quantum
