@@ -492,12 +492,13 @@ void *hiloHotPlug(void *sinUso){
 	printf("===------>CpU DeSCoNECTANdoSE<-------===\n");
 	if(g_procesoAceptado){
 		log_debug(g_logger,"se cerrara el proceso CPU con un programa ejecutandose al momento del cierre");
+		printf("se cerrara el proceso CPU con un programa ejecutandose al momento del cierre\n");
 		g_desconexion=true;
 		cpuInactiva=0;
 	}else{
 		//printf("desconectandose\n");
 		log_debug(g_logger,"se cerrara el proceso CPU sin ningun programa ejecutandose al momento del cierre");
-
+		printf("se cerrara el proceso CPU sin ningun programa ejecutandose al momento del cierre\n");
 		g_mensaje.encabezado.codMsg=K_EXPULSADO_DESCONEXION;
 		g_mensaje.encabezado.longitud=0;
 		enviarMsg(g_socketKernel,g_mensaje);

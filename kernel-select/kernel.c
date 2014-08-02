@@ -225,7 +225,7 @@ void atenderCPU(int p_sockCPU){
 	break;
 	case K_EXPULSADO_FIN_PROG:
 		log_debug(g_logger,"atenderCPU()==>mensaje de cpu:K_EXPULSADO_FIN_PROG");
-		printf("atenderCPU()==>mensaje de cpu:K_EXPULSADO_FIN_PROG\n");
+		//printf("atenderCPU()==>mensaje de cpu:K_EXPULSADO_FIN_PROG\n");
 		//un proceso termino=>a la lista listaTerminados
 		actualizarPcb(&l_pcb,mensajeCPU);//------------>hace falta?----->VER SINO OTRA FORMA DE SACAR EL id
 		liberarMsg(&mensajeCPU);
@@ -1233,7 +1233,7 @@ void *hiloTerminarProcesos(void *sinUso){
 		pthread_mutex_unlock(&mutex_listaTerminados);
 		//se saco al proceos de listaTerminados
 		log_debug(g_logger,"hiloTerminarProcesos()==>Termino de ejecutarse y se expulsa el proceso id:%i",proceso->pcb.id_proceso);
-		printf("\nhiloTerminarProcesos()==>Termino de ejecutarse y se expulsa el proceso id:%i  soquet:%i",proceso->pcb.id_proceso,proceso->soquet_prog);
+		//printf("\nhiloTerminarProcesos()==>Termino de ejecutarse y se expulsa el proceso id:%i  soquet:%i",proceso->pcb.id_proceso,proceso->soquet_prog);
 		//PEDIR A UMV LIBERE TODOS LOS SEGMENTOS DEL PROCESO
 		mensaje.encabezado.codMsg=U_DESTRUIR_SEGMENTO;
 		mensaje.encabezado.longitud=sizeof(int16_t);
@@ -1269,7 +1269,7 @@ void *hiloTerminarProcesos(void *sinUso){
 		//sacando el socket del conjunto de lectura
 		//FD_CLR(proceso->soquet_prog,&g_fds_maestroProg);------>deprecado
 		//cerrando la conexion
-		printf("\ncerrando el socket");
+		//printf("\ncerrando el socket");
 		close(proceso->soquet_prog);
 		destruirNodoProceso(proceso);
 	}

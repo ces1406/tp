@@ -8,6 +8,7 @@
 #include "cpu_primitivas.h"
 
 extern bool           g_desconexion;
+extern bool           g_procesoAceptado;
 extern t_dictionary  *g_diccionario_var;
 extern bool           g_expulsar;
 extern char          *g_infoEtiquetas;
@@ -449,6 +450,7 @@ void primitiva_wait(t_nombre_semaforo id_semaforo){
 }
 void falloMemoria(){
 	g_expulsar=true;
+	g_procesoAceptado=false;
 	g_mensaje.encabezado.codMsg=K_EXPULSADO_SEG_FAULT;
 	cargarPcb();
 	enviarMsg(g_socketKernel,g_mensaje);
