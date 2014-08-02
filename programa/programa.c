@@ -63,7 +63,7 @@ int main (int argc,char *argv[]){
 
 
 	//---------------------------------------->METODO CORTO<-------------------------------------------------
-	/*descriptorArch=open(argv[1],O_RDONLY);
+/*  descriptorArch=open(argv[1],O_RDONLY);
 	//EXTRAYENDO INFO DEL ARCHIVO EN infoArchivo
 	fstat(descriptorArch,&infoArchivo);
 	tamanio=infoArchivo.st_size;
@@ -72,7 +72,7 @@ int main (int argc,char *argv[]){
 	read(descriptorArch,data,tamanio);
 	close(descriptorArch);
 	//log_debug(logger,"Se abrio el script a ejecutar de tamanio:%i con el contenido:\n%s",tamanio,data);
-	  */
+*/
 	//-------------------------------------->FIN METODO CORTO<----------------------------------------------
 
 	//LEVANTANDO ARCHIVO DE CONFIGURACION
@@ -98,16 +98,13 @@ int main (int argc,char *argv[]){
 	//log_debug(logger,"Se mando mensaje a kernel con codigo:K_HANDSHAKE...");
 
 	while(1){
-		printf("entrando al while esperando mensaje...\n");
 		recibirMsg(socketKernel,&mensaje);
-		printf("llego mensaje\n");
 
 		if(mensaje.encabezado.codMsg==P_ENVIAR_SCRIPT){
-			printf("se recibio enviar-script\n");
 			//log_debug(logger,"Se recibio un mensaje de kernel con el codigo: P_ENVIAR_SCRIPT y se enviara el script...");
 			mensaje.encabezado.codMsg=K_ENVIO_SCRIPT;
 			mensaje.encabezado.longitud=tamanio;
-			printf("tamanio del script%i\n",tamanio);
+			//printf("tamanio del script%i\n",tamanio);
 			mensaje.flujoDatos=malloc(tamanio);
 			memcpy(mensaje.flujoDatos,data,tamanio);
 			enviarMsg(socketKernel,mensaje);

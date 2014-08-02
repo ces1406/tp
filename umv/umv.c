@@ -14,6 +14,7 @@ int     tamanioBloque;
 int     retardo;
 int     algoritmo=FIRST_FIT;// 1=first-fit  0=worst-fit
 int     ultimaDirLogica;
+int     cantSegmentos=0;
 char    ipUMV[16];
 t_byte *mp;
 t_log  *loguer;
@@ -550,7 +551,7 @@ int evaluarCompactacion(t_size tamanioSeg){
 void llenarSegmento(t_segmento* segmento,u_int32_t tamanio,u_int32_t idProg,u_int32_t idSegmento,u_int32_t dirInicio){
 	segmento->dirLogica=ultimaDirLogica;
 	segmento->idProceso=idProg;
-	segmento->idSegmento=idSegmento;
+	segmento->idSegmento=cantSegmentos++;//idSegmento;
 	segmento->inicio=dirInicio;
 	segmento->tamanio=tamanio;
 	ultimaDirLogica=ultimaDirLogica+tamanio;

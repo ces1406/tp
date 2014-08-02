@@ -186,14 +186,15 @@ if(!g_expulsar){
 		log_debug(g_logger,"Error de escritura en umv del cursor de pila viejo...");
 		falloMemoria();
 	}else{
+		printf("            --->cursOr de StaCk apiladO<---\n");
 		//APILAR pcb.program_counter incrementado en uno
 		offset=offset+sizeof(t_palabra);
-		printf("            --->prOgram cOUnter apiladO:%i<---\n",pcAnterior);
 		if(escrituraUMV(g_pcb.segmento_pila,g_pcb.cursor_de_pila-g_pcb.segmento_pila+offset,sizeof(uint16_t),(t_byte*)&pcAnterior)==-1){
 			//error--->segmento de pila sobrepasado
 			printf("             --->ERRoR eN LA EscRITuRA dEL PRoGRAM couNTER\n");
 			falloMemoria();
 		}else{
+			printf("            --->prOgram cOUnter apiladO:%i<---\n",pcAnterior);
 			//SETEAR pcb.tamaño_contexto_actual
 			g_pcb.tamanio_contexto_actual=0;
 			//SETEAR EL NUEVO pcb.cursor_de_pila
@@ -210,6 +211,8 @@ if(!g_expulsar){
 	printf("===>PRIMITIVA: llamar cOn retorno\n");
 	log_debug(g_logger,":::primitiva_llamarConRetorno:::");
 	primitiva_llamarSinRetorno(etiqueta);
+}
+if(!g_expulsar){//------------------------------->pregunto otra vez porque tal vez llamar_sin_retorno produjo expulsion
 	//ADEMAS APILAR LA DIR DE RETORNO
 	offset=g_pcb.cursor_de_pila-g_pcb.segmento_pila;
 	if(escrituraUMV(g_pcb.segmento_pila,offset,sizeof(t_puntero),(t_byte*)&donde_retornar)==-1){
@@ -445,7 +448,7 @@ void primitiva_wait(t_nombre_semaforo id_semaforo){
 	}
 }
 void falloMemoria(){
-		g_expulsar=true;
+	g_expulsar=true;
 	g_mensaje.encabezado.codMsg=K_EXPULSADO_SEG_FAULT;
 	cargarPcb();
 	enviarMsg(g_socketKernel,g_mensaje);
